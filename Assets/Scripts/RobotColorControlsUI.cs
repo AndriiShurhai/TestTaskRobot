@@ -14,50 +14,20 @@ public class RobotColorControlsUI : MonoBehaviour
 
     private void Awake()
     {
-        foreach (Transform colorTransform in headColorsContainer.transform)
-        {
-            GameObject colorOption = colorTransform.gameObject;
-            var button = colorOption.GetComponent<Button>();
-            if (button != null)
-            {
-                button.onClick.AddListener(() => OnColorSelected(RobotPartType.Head, colorOption.GetComponent<Image>().color));
-            }
-        }
-        foreach (Transform colorTransform in bodyColorsContainer.transform)
-        {
-            GameObject colorOption = colorTransform.gameObject;
-            var button = colorOption.GetComponent<Button>();
-            if (button != null)
-            {
-                button.onClick.AddListener(() => OnColorSelected(RobotPartType.Body, colorOption.GetComponent<Image>().color));
-            }
-        }
-        foreach (Transform colorTransform in legsColorsContainer.transform)
-        {
-            GameObject colorOption = colorTransform.gameObject;
-            var button = colorOption.GetComponent<Button>();
-            if (button != null)
-            {
-                button.onClick.AddListener(() => OnColorSelected(RobotPartType.Legs, colorOption.GetComponent<Image>().color));
-            }
-        }
+        RegisterColorButtons(headColorsContainer, RobotPartType.Head);
+        RegisterColorButtons(bodyColorsContainer, RobotPartType.Body);
+        RegisterColorButtons(legsColorsContainer, RobotPartType.Legs);
     }
 
-
-    private void OnColorSelected(RobotPartType partType, Color color)
+    private void RegisterColorButtons(GameObject container, RobotPartType partType)
     {
-        Debug.Log($"Color selected for {partType}: {color}");   
-        switch (partType)
+        foreach (Transform t in container.transform)
         {
-            case RobotPartType.Head:
-                RobotBuilder.Instance.SetPartColor(RobotPartType.Head, color);
-                break;
-            case RobotPartType.Body:
-                RobotBuilder.Instance.SetPartColor(RobotPartType.Body, color);
-                break;
-            case RobotPartType.Legs:
-                RobotBuilder.Instance.SetPartColor(RobotPartType.Legs, color);
-                break;
+            var go = t.gameObject;
+            var button = go.GetComponent<Button>();
+            if (button == null) continue;
+            var color = go.GetComponent<Image>().color;
+            button.onClick.AddListener(() => RobotBuilder.Instance.SetPartColor(partType, color));
         }
     }
 }

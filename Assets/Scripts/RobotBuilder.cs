@@ -171,4 +171,5 @@ public class RobotBuilder : MonoBehaviour
 
         OnStatsChanged?.Invoke(totalWeight, totalPower);
     }
+    public void RequestStatsUpdate() => UpdateStats();
 }

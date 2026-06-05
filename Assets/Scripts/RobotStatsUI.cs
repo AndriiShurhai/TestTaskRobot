@@ -15,6 +15,7 @@ public class RobotStatsUI : MonoBehaviour
         if (RobotBuilder.Instance != null)
         {
             RobotBuilder.Instance.OnStatsChanged += UpdateStats;
+            RobotBuilder.Instance.RequestStatsUpdate();
         }
     }
 
