@@ -38,9 +38,19 @@ public class RobotBuilder : MonoBehaviour
 
     private void Start()
     {
-        SpawnPart(RobotPartType.Head, 1);
+        SpawnPart(RobotPartType.Head, _currentHeadIndex);
         SpawnPart(RobotPartType.Body, _currentBodyIndex);
-        SpawnPart(RobotPartType.Legs, 1);
+        SpawnPart(RobotPartType.Legs, _currentLegsIndex);
+    }
+
+    public void NextPart(RobotPartType type)
+    {
+        ChangePart(type, 1);
+    }
+
+    public void PreviousPart(RobotPartType type)
+    {
+        ChangePart(type, -1);
     }
 
     private void SpawnPart(RobotPartType partType, int index)
@@ -78,5 +88,33 @@ public class RobotBuilder : MonoBehaviour
         {
             currentPartInstance = Instantiate(currentPartData.partPrefab, positionToSpawn, Quaternion.identity, _robot.transform);
         }
+    }
+    
+    private void ChangePart(RobotPartType type, int direction)
+    {
+        switch (type)
+        {
+            case RobotPartType.Head:
+                _currentHeadIndex = GetNextIndex(_currentHeadIndex, direction, _headParts.Count);
+                SpawnPart(type, _currentHeadIndex);
+                break;
+            case RobotPartType.Body:
+                _currentBodyIndex = GetNextIndex(_currentBodyIndex, direction, _bodyParts.Count);
+                SpawnPart(type, _currentBodyIndex);
+                break;
+            case RobotPartType.Legs:
+                _currentLegsIndex = GetNextIndex(_currentLegsIndex, direction, _legsParts.Count);
+                SpawnPart(type, _currentLegsIndex);
+                break;
+        }
+    }
+
+    private int GetNextIndex(int currentIndex, int direction, int listCount)
+    {
+        if (listCount == 0) return 0;
+
+        int newIndex = (currentIndex + direction) % listCount;
+        if (newIndex < 0) newIndex += listCount;
+        return newIndex;
     }
 }
