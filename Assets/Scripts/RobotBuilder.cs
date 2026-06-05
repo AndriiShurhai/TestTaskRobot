@@ -89,6 +89,7 @@ public class RobotBuilder : MonoBehaviour
         if (currentPartData != null && currentPartData.partPrefab != null)
         {
             currentPartInstance = Instantiate(currentPartData.partPrefab, positionToSpawn, Quaternion.identity, _robot.transform);
+            currentPartInstance.transform.rotation = _robot.transform.rotation;
         }
     }
     
