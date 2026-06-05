@@ -7,16 +7,16 @@ using UnityEngine.EventSystems;
 
 public class RobotRotator : MonoBehaviour, IDragHandler
 {
-    [SerializeField] private float rotationSpeed = 0.5f;
+    [SerializeField] private float _rotationSpeed = 0.5f;
 
-    [SerializeField] private Transform targetToRotate;
+    [SerializeField] private Transform _targetToRotate;
 
     public void OnDrag(PointerEventData eventData)
     {
-        if (targetToRotate == null) return;
+        if (_targetToRotate == null) return;
 
         float deltaX = eventData.delta.x;
 
-        targetToRotate.Rotate(Vector3.up, -deltaX * rotationSpeed, Space.World);
+        _targetToRotate.Rotate(Vector3.up, -deltaX * _rotationSpeed, Space.World);
     }
 }

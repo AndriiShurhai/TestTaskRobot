@@ -55,6 +55,22 @@ public class RobotBuilder : MonoBehaviour
         ChangePart(type, -1);
     }
 
+    public void SetPartColor(RobotPartType type, Color color)
+    {
+        switch (type)
+        {
+            case RobotPartType.Head:
+                if (_currentHeadInstance != null) _currentHeadInstance.GetComponent<PartColorChanger>().SetColor(color);
+                break;
+            case RobotPartType.Body:
+                if (_currentBodyInstance != null) _currentBodyInstance.GetComponent<PartColorChanger>().SetColor(color);
+                break;
+            case RobotPartType.Legs:
+                if (_currentLegsInstance != null) _currentLegsInstance.GetComponent<PartColorChanger>().SetColor(color);
+                break;
+        }
+    }
+
     private void SpawnPart(RobotPartType partType, int index)
     {
         RobotPartData currentPartData = null;
@@ -84,12 +100,20 @@ public class RobotBuilder : MonoBehaviour
                 break;  
         }
 
-        if (currentPartInstance != null) Destroy(currentPartInstance);
+        if (currentPartInstance != null)
+        {
+            Destroy(currentPartInstance);
+        }
 
         if (currentPartData != null && currentPartData.partPrefab != null)
         {
             currentPartInstance = Instantiate(currentPartData.partPrefab, positionToSpawn, Quaternion.identity, _robot.transform);
             currentPartInstance.transform.rotation = _robot.transform.rotation;
+
+            if (currentPartInstance.GetComponent<PartColorChanger>() == null)
+            {
+                currentPartInstance.AddComponent<PartColorChanger>();
+            }
         }
     }
     
@@ -134,13 +158,13 @@ public class RobotBuilder : MonoBehaviour
             totalPower += _headParts[_currentHeadIndex].power;
         }
 
-        if (_currentBodyIndex > 0)
+        if (_bodyParts.Count > 0)
         {
             totalWeight += _bodyParts[_currentBodyIndex].weight;
             totalPower += _bodyParts[_currentBodyIndex].power;
         }
 
-        if (_currentLegsIndex > 0)
+        if (_legsParts.Count > 0)
         {
             totalWeight += _legsParts[_currentLegsIndex].weight;
             totalPower += _legsParts[_currentLegsIndex].power;
