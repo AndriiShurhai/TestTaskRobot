@@ -41,6 +41,8 @@ public class RobotBuilder : MonoBehaviour
         SpawnPart(RobotPartType.Head, _currentHeadIndex);
         SpawnPart(RobotPartType.Body, _currentBodyIndex);
         SpawnPart(RobotPartType.Legs, _currentLegsIndex);
+
+        UpdateStats();
     }
 
     public void NextPart(RobotPartType type)
@@ -107,6 +109,8 @@ public class RobotBuilder : MonoBehaviour
                 SpawnPart(type, _currentLegsIndex);
                 break;
         }
+
+        UpdateStats();
     }
 
     private int GetNextIndex(int currentIndex, int direction, int listCount)
@@ -116,5 +120,31 @@ public class RobotBuilder : MonoBehaviour
         int newIndex = (currentIndex + direction) % listCount;
         if (newIndex < 0) newIndex += listCount;
         return newIndex;
+    }
+
+    private void UpdateStats()
+    {
+        float totalWeight = 0f;
+        float totalPower = 0f;
+
+        if (_headParts.Count > 0)
+        {
+            totalWeight += _headParts[_currentHeadIndex].weight;
+            totalPower += _headParts[_currentHeadIndex].power;
+        }
+
+        if (_currentBodyIndex > 0)
+        {
+            totalWeight += _bodyParts[_currentBodyIndex].weight;
+            totalPower += _bodyParts[_currentBodyIndex].power;
+        }
+
+        if (_currentLegsIndex > 0)
+        {
+            totalWeight += _legsParts[_currentLegsIndex].weight;
+            totalPower += _legsParts[_currentLegsIndex].power;
+        }
+
+        OnStatsChanged?.Invoke(totalWeight, totalPower);
     }
 }
