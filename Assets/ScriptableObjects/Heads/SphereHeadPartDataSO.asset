@@ -1,0 +1,19 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5df738f9974e3d544a556f443ae9884e, type: 3}
+  m_Name: SphereHeadPartDataSO
+  m_EditorClassIdentifier: Assembly-CSharp::RobotPartData
+  partPrefab: {fileID: 1651659890799123296, guid: aba0413845322444e9c01fb3398186c1, type: 3}
+  partType: 0
+  weight: 1
+  power: 2
+  partName: Sphere Head

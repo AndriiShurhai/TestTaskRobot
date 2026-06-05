@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 5842236125631865658}
   - component: {fileID: 6561399590141087519}
   m_Layer: 0
-  m_Name: Body_Cylinder 1
+  m_Name: Body_Capsule
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
